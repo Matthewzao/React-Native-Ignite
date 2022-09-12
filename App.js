@@ -1,22 +1,43 @@
 import React, { useState } from 'react'
 import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 export default function App() {
 
-  const [newSkill, setNewSkil] = useState();
+  const [newSkill, setNewSkill] = useState();
+
+  // amarzenando as skills 
+  const [mySkills, setMySkills] = useState([]);
+
+  // função disparada por ação do usuario
+  function handleAddNewSkill() {
+    setMySkills(oldState => [...oldState, newSkill]); //sprad operator(...) pega o ultimo valor do mySkills
+  }
 
   return (
     <View style={estilos.container}>
       <StatusBar style="light" />
-      <Text style={estilos.title}>Welcome, Matthew</Text>
-      <TextInput onChangeText={setNewSkil} placeholderTextColor='#555' placeholder='New Skill' style={estilos.input} />
-      <TouchableOpacity style={estilos.button}>
+      <Text style={estilos.title}>Salve, Gustavo</Text>
+      <TextInput onChangeText={setNewSkill}
+        placeholderTextColor='#555'
+        placeholder='New Skill'
+        style={estilos.input} />
+      <TouchableOpacity onPress={handleAddNewSkill} style={estilos.button}>
         <Text style={estilos.buttonText}>ADD</Text>
       </TouchableOpacity>
       <Text style={[estilos.title, { color: 'white' }]}>
-        {newSkill}
+        Suas Skills
       </Text>
+
+      {
+        mySkills.map(skill => (
+          <TouchableOpacity style={estilos.buttonSkill}>
+            <Text style={estilos.textSkill}>
+              {skill}
+            </Text>
+          </TouchableOpacity>
+        ))
+      }
     </View>
   );
 }
@@ -36,20 +57,20 @@ const estilos = StyleSheet.create({
   },
   input: {
     backgroundColor: '#1F1e25',
-    color: 'red',
+    color: 'white',
     padding: 14,
     marginTop: 30,
-    borderRadius: 6,
+    borderRadius: 4,
     fontSize: 18,
-    width: 350,
-    marginLeft: 11
+    width: 325,
+    marginLeft: 25
   },
   button: {
     backgroundColor: 'purple',
     width: 50,
     alignItems: 'center',
     borderRadius: 6,
-    marginLeft: 310,
+    marginLeft: 300,
     padding: 5,
     marginVertical: 15,
     fontWeight: 'bold'
@@ -60,12 +81,27 @@ const estilos = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 15
   },
-  // skills: {
-  //   color: 'white',
-  //   marginLeft: 25,
-  //   fontSize: 25,
-  //   fontWeight: 'bold'
-  // }
+
+  textSkill: {
+    color: 'purple',
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+
+  buttonSkill: {
+    borderRadius: 20,
+    padding: 15,
+    backgroundColor: '#1F1e25',
+    width: 325,
+    marginLeft: 25,
+    marginTop: 20,
+    alignItems: 'center'
+
+
+
+
+
+  }
 
 });
 
